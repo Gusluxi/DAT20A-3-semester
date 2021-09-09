@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Functions 2</title>
+</head>
+<body>
+<script>
+
+    const myFavoriteThings = ["Java", "😋", false]
+
+    function printer(something) {
+        console.log(something);
+    }
+
+    myFavoriteThings.forEach((element, index, list) => printer(element, index));
+    myFavoriteThings.forEach(console.log)
+</script>
+</body>
+</html>

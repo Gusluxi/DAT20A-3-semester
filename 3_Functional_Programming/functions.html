@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Functional Prog in JS</title>
+</head>
+<body style="background-color: blueviolet;">
+
+
+
+<script>
+    const greetings = function greetings() {
+        console.log("Hello World")
+    }
+    greetings();
+
+    const greetingsAnonymousFunction = function () {
+        console.log("Hello Second World")
+    }
+
+    function returnMeAFunction() {
+        //returns a function reference (which means that it dosn't call it just passes the function)
+        return greetingsAnonymousFunction;
+    }
+
+    returnMeAFunction();
+
+</script>
+
+</body>
+</html>
