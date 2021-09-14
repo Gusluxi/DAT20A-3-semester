@@ -1,0 +1,11 @@
+{
+"key": "value",
+"you're": "mom",
+"this works": #2,
+"okay": false,
+"arrayOfObjects": [
+ "objOne":{"name": "Kristian", "age": 55},
+ "objTwo":{"name": "Andy", "age": 25}
+ ]
+"countryRoad": 23.45.54,
+}
