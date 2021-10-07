@@ -1,8 +1,7 @@
 package dk.kea.trash_api.controller;
 
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -30,6 +29,18 @@ public class TrashController {
   public String deadlySin() {
     int sinNum = (int) ((Math.random() * 7) + 1)-1;
     return deadlySins.get(sinNum);
+  }
+
+  @GetMapping("/trash")
+  public String trash (@RequestParam(value="trash") String trash) {
+
+    return trash;
+  }
+
+  @PostMapping("/rubbishbin")
+  public String throwOutRubbish(@RequestBody String rubbish) {
+    System.out.println(rubbish);
+    return "Everything went Well";
   }
 
 }
