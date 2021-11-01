@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rick and Morty</title>
+    <style>
+        #character-gallery {
+            display:flex;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+<select id="status-selection">
+    <option value="All">All</option>
+    <option value="Alive">Alive</option>
+    <option value="Dead">Dead</option>
+    <option value="unknown">Unknown</option>
+</select>
+<input id="name-search" placeholder="Search a Name">
+<button id="search-button">Search</button>
+
+<div id="character-gallery"></div>
+
+    <script src="./lib/HTMLEscape.js"></script>
+    <script src="./rigormortis.js"></script>
+</body>
+</html>
