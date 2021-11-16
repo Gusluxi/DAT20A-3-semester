@@ -1,44 +1,52 @@
 package dk.kea.paintings.models;
 
-import io.swagger.annotations.ApiModelProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Data
-@Table(name = "artists")
+@Table(name="artists")
 @Entity
 public class Artist {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    private Long id;
 
-  @Column
-  @ApiModelProperty(notes = "name of the artist")
-  private String name;
+    @Column
+    private String name;
 
-  @Column
-  private int age;
+    @Column
+    private int age;
 
-  @Column
-  private String style;
+    @Column
+    private String artistImage;
 
-  @Column(length=100)
-  private String nationality;
+    @Column
+    private String primaryStyle;
 
-  @Column
-  private Date birthDate;
+    @Column(length = 100)
+    private String nationality;
 
-  @Column
-  @Enumerated(value = EnumType.STRING)
-  private Gender gender;
+    @Column
+    private Date birthDate;
 
-  @ManyToOne
-  @JoinColumn(name = "gallery_id")
-  @Nullable
-  private Gallery gallery;
+    @Enumerated(value = EnumType.STRING)
+    @Column
+    private Gender gender;
+
+    @ManyToOne
+    @JoinColumn(name = "gallery_id")
+    @Nullable
+    private Gallery gallery;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "artists", fetch = FetchType.LAZY)
+    private List<Painting> paintings;
+
 }

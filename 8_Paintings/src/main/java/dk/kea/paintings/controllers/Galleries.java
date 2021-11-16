@@ -8,68 +8,54 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class Galleries {
 
-  @Autowired
-  GalleryRepository galleries;
+    @Autowired
+    GalleryRepository galleries;
 
-  @GetMapping("/galleries")
-  public Iterable<Gallery> getArtists() {
-
-    return galleries.findAll();
-  }
-
-  @GetMapping("/galleries/{id}")
-  public Gallery getGallery(@PathVariable Long id) {
-    return galleries.findById(id).get();
-  }
-
-  @PostMapping("/galleries")
-  public Gallery addGallery(@RequestBody Gallery newGallery) {
-    return galleries.save(newGallery);
-  }
-
-  @PutMapping("/galleries/{id}")
-  public String updateGallery(@PathVariable Long id, @RequestBody Gallery updatedGallery) {
-
-    if (!galleries.existsById(id)) {
-      return "No Gallery by id: " + id + " exists, nothing updated";
+    @GetMapping("/galleries")
+    public Iterable<Gallery> getGalleries() {
+        return galleries.findAll();
     }
-    updatedGallery.setId(id);
-    galleries.save(updatedGallery);
-    return "Gallery Updated: "+updatedGallery;
 
-    /* Uden If statement og længere
-      return artists.findById(id).map(foundArtist -> {
-        foundArtist.setName(updatedArtist.getName());
-        foundArtist.setAge(updatedArtist.getAge());
-        foundArtist.setBirthDate(updatedArtist.getBirthDate());
-        foundArtist.setGender(updatedArtist.getGender());
-        foundArtist.setNationality(updatedArtist.getNationality());
-        foundArtist.setStyle(updatedArtist.getStyle());
-        return artists.save(foundArtist);
-      }).get();
-    */
-
-  }
-
-  @PatchMapping("/galleries/{id}")
-  public String patchArtistById(@PathVariable Long id, @RequestBody Gallery galleryToUpdateWith) {
-    return galleries.findById(id).map(foundGallery -> {
-      if (galleryToUpdateWith.getOwner() != null) foundGallery.setOwner(galleryToUpdateWith.getOwner());
-      if (galleryToUpdateWith.getName() != null) foundGallery.setName(galleryToUpdateWith.getName());
-      if (galleryToUpdateWith.getLocation() != null) foundGallery.setLocation(galleryToUpdateWith.getLocation());
-      if (galleryToUpdateWith.getSquareFeet() != 0) foundGallery.setSquareFeet(galleryToUpdateWith.getSquareFeet());
-
-      galleries.save(foundGallery);
-      return "Gallery updated";
-    }).orElse("Gallery not found");
-  }
-
-  @DeleteMapping("/galleries/{id}")
-  public String deleteArtist(@PathVariable Long id) {
-    if (!galleries.existsById(id)) {
-      return "Gallery doesn't exists by id:" + id + ", No Gallery Deleted";
+    @GetMapping("/galleries/{id}")
+    public Gallery getGallery(@PathVariable Long id) {
+        return galleries.findById(id).get();
     }
-    galleries.deleteById(id);
-    return "Gallery Deleted";
-  }
+
+    @PostMapping("/galleries")
+    public Gallery addGallery(@RequestBody Gallery newGallery) {
+        // don't allow the client to overwrite the id
+        newGallery.setId(null);
+        return galleries.save(newGallery);
+    }
+
+    @PutMapping("/galleries/{id}")
+    public String updateGalleryWithId(@PathVariable Long id, @RequestBody Gallery galleryToUpdateWith) {
+        if (galleries.existsById(id)) {
+            galleryToUpdateWith.setId(id);
+            galleries.save(galleryToUpdateWith);
+            return "Gallery was created";
+        } else {
+            return "Gallery not found";
+        }
+    }
+
+    @PatchMapping("/galleries/{id}")
+    public String patchGalleryById(@PathVariable Long id, @RequestBody Gallery galleryToUpdateWith) {
+        return galleries.findById(id).map(foundArtist -> {
+            if (galleryToUpdateWith.getName() != null) foundArtist.setName(galleryToUpdateWith.getName());
+            if (galleryToUpdateWith.getOwner() != null) foundArtist.setOwner(galleryToUpdateWith.getOwner());
+            if (galleryToUpdateWith.getLocation() != null) foundArtist.setLocation(galleryToUpdateWith.getLocation());
+            if (galleryToUpdateWith.getSquareFeet() != 0) foundArtist.setSquareFeet(galleryToUpdateWith.getSquareFeet());
+
+            galleries.save(foundArtist);
+            return "Gallery updated";
+        }).orElse("Gallery not found");
+    }
+
+    @DeleteMapping("/galleries/{id}")
+    public void deleteGalleryById(@PathVariable Long id) {
+        galleries.deleteById(id);
+    }
+
+
 }

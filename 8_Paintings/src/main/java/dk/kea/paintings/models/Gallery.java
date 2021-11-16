@@ -1,16 +1,15 @@
 package dk.kea.paintings.models;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Set;
 
-
-  @Data
-  @Table(name = "galleries")
-  @Entity
-  public class Gallery {
+@Data
+@Table(name = "galleries")
+@Entity
+public class Gallery {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
